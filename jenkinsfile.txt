@@ -12,17 +12,17 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package' 
             }
 	}
-    }
-    stage('Test') { 
-	steps {
-	    echo 'CHRIS I am invoking maven to run the tests'
-            sh 'mvn test' 
-	}
-	post {
-	    always {
-		echo 'I am testing the post step'
-		junit 'target/surefire-reports/*.xml' 
+	stage('Test') { 
+	    steps {
+		echo 'CHRIS I am invoking maven to run the tests'
+		sh 'mvn test' 
 	    }
-	}
+	    post {
+		always {
+		    echo 'I am testing the post step'
+		    junit 'target/surefire-reports/*.xml' 
+		}
+	    }
+        }
     }
 }
