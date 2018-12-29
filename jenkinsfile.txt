@@ -1,0 +1,33 @@
+pipeline {
+    agent {
+        docker {
+            image 'maven:3-alpine' 
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
+    stages {
+        stage('Build') { 
+            steps {
+		echo 'CHRIS at this stage I am just cleaning up first'
+                sh 'mvn -B -DskipTests clean package' 
+            }
+	}
+	stage('Test') { 
+            steps {
+		echo 'CHRIS I am invoking maven to run the tests'
+                sh 'mvn test' 
+            }
+            post {
+                always {
+		echo 'I am testing the post step'
+                    junit 'target/surefire-reports/*.xml' 
+                }
+            }
+	}
+	stage('Deliver') {
+            steps {
+		echo 'trying the deliver stage as an example'
+            }
+        }
+    }
+}
