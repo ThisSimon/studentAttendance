@@ -1,3 +1,4 @@
+package com.simonremington.app; 
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
